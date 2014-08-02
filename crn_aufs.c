@@ -3,8 +3,8 @@
 #include <mntent.h>
 
 int
-aufs_mount(char *base, char *diff, char *target) {
-	if (!is_mounted(target)) {
+crn_aufs_mount(char *base, char *diff, char *target) {
+	if (!crn_is_mounted(target)) {
 		char buf[BUFLEN];
 		sprintf(buf, "br:%s=rw:%s=ro+wh:,xino=/dev/shm/aufs.xino", diff, base);
 		return mount("none", target, "aufs", MS_RELATIME, buf);
@@ -13,11 +13,11 @@ aufs_mount(char *base, char *diff, char *target) {
 }
 
 int
-aufs_umount(char *target) {
+crn_aufs_umount(char *target) {
 	return umount(target);
 }
 
-int is_mounted(char *target) {
+int crn_is_mounted(char *target) {
 	struct mntent *ent;
 	FILE *file;
 

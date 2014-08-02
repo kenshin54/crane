@@ -23,8 +23,17 @@ crn_err_msg(const char *fmt, ...) {
 }
 
 void
-crn_err_sys(const char *fmt, ...)
-{
+crn_err_quit(const char *fmt, ...) {
+	va_list		ap;
+
+	va_start(ap, fmt);
+	crn_err_internal(0, 0, fmt, ap);
+	va_end(ap);
+	exit(1);
+}
+
+void
+crn_err_sys(const char *fmt, ...) {
 	va_list		ap;
 
 	va_start(ap, fmt);

@@ -29,6 +29,7 @@
 
 void crn_err_ret(const char *fmt, ...);
 void crn_err_msg(const char *fmt, ...);
+void crn_err_quit(const char *fmt, ...);
 void crn_err_sys(const char *fmt, ...);
 void crn_err_exit(int error, const char *fmt, ...);
 

@@ -50,3 +50,18 @@ out:
 	free(path);
 	return (rv);
 }
+
+int
+crn_str_endwith(char* base, char* str) {
+    int blen = strlen(base);
+    int slen = strlen(str);
+    return (blen >= slen) && (0 == strcmp(base + blen - slen, str));
+}
+
+char *
+crn_strncpy(char *src, size_t n) {
+	char *dest = malloc(n + 1);
+	strncpy(dest, src, n);
+	dest[n] = '\0';
+	return dest;
+}
