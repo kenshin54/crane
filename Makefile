@@ -1,12 +1,16 @@
 CFLAGS=-ansi -I${CURDIR} -Wall -DMACOS
 LDFLAGS=-pthread 
 
-all: crane
+all: obj crane
 
-%.o: %.c
+obj:
+	mkdir obj
+
+obj/%.o: src/%.c
 	cc -c -o $@ $<
 
-crane: nl.o crn_list.o crn_error.o crn_aufs.o crn_container.o crn_utils.o crn_network.o crn_cgroup.o
+crane: obj/nl.o obj/crn_list.o obj/crn_error.o obj/crn_aufs.o obj/crn_container.o obj/crn_utils.o obj/crn_network.o obj/crn_cgroup.o
+	cc $(CFLAGS) $(LDFLAGS) -o $@ src/crane.c $^
 
 clean:
-	rm -rf nl.o crn_list.o crn_error.o crn_aufs.o crn_container.o crn_utils.o crn_network.o crn_cgroup.o crane
+	rm -rf obj crane
