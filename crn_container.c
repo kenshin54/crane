@@ -6,12 +6,21 @@
 #include "nl.h"
 #include "crn_network.h"
 #include "crn_cgroup.h"
+#include <semaphore.h>
 
 #define NETNS_VETH_HOST "vh"
 #define NETNS_VETH_GUEST "vg"
 #define NETNS_DIR "/var/run/netns"
 #define ETH_LOOPBACK "lo"
 #define HOSTS_FILE "/etc/hosts"
+
+#define SEM_NAME "crn_contaier_sem"
+#define SEM_OPEN_FLAG O_RDWR|O_CREAT
+#define SEM_OPEN_MODE 00777
+#define INIT_V    0
+
+static sem_t *sem = NULL;
+
 
 static struct crn_mount_entry {
 	char *source;
@@ -204,6 +213,16 @@ int
 crn_endpoint(void *arg) {
 	crn_container *container = arg;
 
+	if (sem_wait(sem) < 0) {
+		return -1;
+	}
+	if (sem_unlink(SEM_NAME) < 0) {
+		return -1;
+	}
+	if (sem_close(sem) < 0) {
+		return-1;
+	}
+
 	if (chdir(container->mnt_path) < 0) {
 		crn_err_sys(container->mnt_path);
 		return -1;
@@ -233,7 +252,7 @@ crn_endpoint(void *arg) {
 		return -1;
 	}
 	if (container->network) {
-		sleep(1); //FIXME
+		/*sleep(1); //FIXME*/
 		if (crn_setup_container_network(container) < 0) {
 			crn_err_sys("setup network failed.");
 		}
@@ -252,10 +271,20 @@ crn_run_container(crn_container *container) {
 
 	stack = malloc(STACK_SIZE);
 	stack_top = stack + STACK_SIZE;
+
+    sem = sem_open(SEM_NAME, SEM_OPEN_FLAG, SEM_OPEN_MODE, INIT_V); 
+	if (sem == SEM_FAILED) {
+		return -1;
+	}
+
 	pid = clone(crn_endpoint, stack_top, CLONE_FLAGS, container);
 
 	if (pid == -1) {
 		crn_err_ret("clone failed");
+		return -1;
+	}
+
+	if (sem_post(sem) < 0) {
 		return -1;
 	}
 

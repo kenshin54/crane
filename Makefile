@@ -1,4 +1,5 @@
 CFLAGS=-ansi -I${CURDIR} -Wall -DMACOS
+LDFLAGS=-pthread 
 
 all: crane
 
