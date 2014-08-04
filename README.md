@@ -10,6 +10,19 @@ A mini linux container.
 * Network Settings
 * ...
 
+### build
+
+prerequisite
+
+* kernel support aufs
+* cgroup vfs mounted
+    
+```bash
+git clone https://github.com/kenshin54/crane.git
+cd crane
+make
+```
+
 ### example
 
 ```bash
