@@ -21,7 +21,7 @@ static int nla_put(struct nlmsg *nlmsg, int attr,
 {
 	struct rtattr *rta;
 	size_t rtalen = RTA_LENGTH(len);
-	
+
         rta = NLMSG_TAIL(&nlmsg->nlmsghdr);
         rta->rta_type = attr;
         rta->rta_len = rtalen;
@@ -100,14 +100,14 @@ extern int netlink_rcv(struct nl_handler *handler, struct nlmsg *answer)
                 .iov_base = answer,
                 .iov_len = answer->nlmsghdr.nlmsg_len,
         };
-	
+
 	struct msghdr msg = {
                 .msg_name = &nladdr,
                 .msg_namelen = sizeof(nladdr),
                 .msg_iov = &iov,
                 .msg_iovlen = 1,
         };
-	
+
         memset(&nladdr, 0, sizeof(nladdr));
         nladdr.nl_family = AF_NETLINK;
         nladdr.nl_pid = 0;
@@ -145,7 +145,7 @@ extern int netlink_send(struct nl_handler *handler, struct nlmsg *nlmsg)
                 .msg_iovlen = 1,
         };
 	int ret;
-	
+
         memset(&nladdr, 0, sizeof(nladdr));
         nladdr.nl_family = AF_NETLINK;
         nladdr.nl_pid = 0;

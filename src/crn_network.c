@@ -191,7 +191,7 @@ ip_addr_add(int family, int ifindex,
         ip_req->ifa.ifa_index = ifindex;
         ip_req->ifa.ifa_family = family;
 	ip_req->ifa.ifa_scope = 0;
-	
+
 	err = -EINVAL;
 	if (nla_put_buffer(nlmsg, IFA_LOCAL, addr, addrlen))
 		goto out;

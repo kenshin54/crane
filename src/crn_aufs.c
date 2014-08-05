@@ -17,7 +17,8 @@ crn_aufs_umount(char *target) {
 	return umount(target);
 }
 
-int crn_is_mounted(char *target) {
+int
+crn_is_mounted(char *target) {
 	struct mntent *ent;
 	FILE *file;
 

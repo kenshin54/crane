@@ -272,7 +272,7 @@ crn_run_container(crn_container *container) {
 	stack = malloc(STACK_SIZE);
 	stack_top = stack + STACK_SIZE;
 
-    sem = sem_open(SEM_NAME, SEM_OPEN_FLAG, SEM_OPEN_MODE, INIT_V); 
+    sem = sem_open(SEM_NAME, SEM_OPEN_FLAG, SEM_OPEN_MODE, INIT_V);
 	if (sem == SEM_FAILED) {
 		return -1;
 	}
@@ -297,7 +297,7 @@ crn_run_container(crn_container *container) {
 	if (crn_mkpath(NETNS_DIR, DIR_MODE) < 0) {
 		crn_err_ret("mkpath failed: %s", NETNS_DIR);
 	}
-	
+
 	sprintf(nsfile, "%s/%d", NETNS_DIR, pid);
 	if(access(nsfile, F_OK) != -1) {
 		if (remove(nsfile) < 0) {
@@ -403,7 +403,7 @@ crn_close_container_cgroup(crn_container *container, char *mountpoint) {
 	char buf[BUFLEN];
 	sprintf(buf, "%s/crane/%s", mountpoint, container->name);
 	if(access(buf, F_OK) != -1) {
-		return rmdir(buf);	
+		return rmdir(buf);
 	}
 	return 0;
 }
@@ -436,7 +436,7 @@ crn_setup_container_customize_cgroup(crn_container *container) {
 int
 crn_setup_container_cgroup(crn_container *container) {
 	char *subsystem = NULL, *mountpoint = NULL;
-	crn_list_t *list = crn_all_subsystems(); 
+	crn_list_t *list = crn_all_subsystems();
 	CRN_LIST_FOREACH(list, next) {
 		subsystem = next->data;
 		mountpoint = crn_cgroup_mountpoint(subsystem);
@@ -456,7 +456,7 @@ crn_setup_container_cgroup(crn_container *container) {
 int
 crn_clean_container_cgroup(crn_container *container) {
 	char *subsystem = NULL, *mountpoint = NULL;
-	crn_list_t *list = crn_all_subsystems(); 
+	crn_list_t *list = crn_all_subsystems();
 	CRN_LIST_FOREACH(list, next) {
 		subsystem = next->data;
 		mountpoint = crn_cgroup_mountpoint(subsystem);
