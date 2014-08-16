@@ -13,7 +13,7 @@ typedef struct {
 } crn_list_t;
 
 crn_list_t *crn_list_create();
-void crn_list_destroy(crn_list_t *);
+void crn_list_destroy(crn_list_t *, void (*)(void *));
 
 #define crn_list_count(A) ((A)->count)
 

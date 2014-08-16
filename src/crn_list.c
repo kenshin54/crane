@@ -10,13 +10,16 @@ crn_list_t *crn_list_create() {
 }
 
 void
-crn_list_destroy(crn_list_t *list) {
+crn_list_destroy(crn_list_t *list, void (*destroy)(void *)) {
 	if (list != NULL) {
 		crn_list_node_t *tmp;
 		crn_list_node_t *head = list->head;
 		while (head != NULL) {
 		   tmp = head;
 		   head = head->next;
+		   if (destroy != NULL) {
+			   destroy(tmp->data);
+		   }
 		   free(tmp);
 		}
 		free(list);

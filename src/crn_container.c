@@ -446,7 +446,7 @@ crn_setup_container_cgroup(crn_container *container) {
 			}
 		}
 	}
-	crn_list_destroy(list);
+	crn_list_destroy(list, &free);
 	if (crn_setup_container_customize_cgroup(container) < 0) {
 		return -1;
 	}
@@ -466,7 +466,7 @@ crn_clean_container_cgroup(crn_container *container) {
 			}
 		}
 	}
-	crn_list_destroy(list);
+	crn_list_destroy(list, &free);
 	return 0;
 }
 
