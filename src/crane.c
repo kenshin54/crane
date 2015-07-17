@@ -15,7 +15,7 @@ usage(int code) {
 			"Options:\n"
 			"\t-r, --root		Set root directory of crane (default: /mnt/crane)\n"
 			"\t-b, --bridge		Attach containers to a pre-existing network bridge\n"
-			"\t-i, --network	Setup network (format: format: <ipaddr>/<subnet>@<default_gateway>#<broadcast>)\n"
+			"\t-t, --network	Setup network (format: format: <ipaddr>/<subnet>@<default_gateway>#<broadcast>)\n"
 			"\t-m, --memory		Memory limit (format: <number><optional unit>, where unit = b, k, m or g)\n"
 			"\t-c, --cpuset		CPUs in which to allow execution (0-3, 0,1)\n"
 			"\t-h, --help		Show this message\n");
@@ -74,7 +74,7 @@ main(int argc, char *argv[]) {
 	char *memory = NULL;
 	char *cpuset = NULL;
 
-	while ((ch = getopt_long(argc, argv, "n:b:r::t::m::c::h", longopts, NULL)) != -1) {
+	while ((ch = getopt_long(argc, argv, "n:i:b:r::t::m::c::h", longopts, NULL)) != -1) {
 		switch (ch) {
 			case 'n':
 				name = optarg;
